@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace weather_app
 {
@@ -24,6 +25,13 @@ namespace weather_app
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            
+            // Add swagger
+
+            services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Weather Api", Version = "v1"}));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +53,13 @@ namespace weather_app
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            
+            // User swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
