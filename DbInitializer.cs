@@ -1,5 +1,8 @@
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace weather_app
 {
@@ -7,7 +10,9 @@ namespace weather_app
     {
         public static void Initialize(AppDbContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
+
+            context.Database.GetService<IDatabaseCreator>().EnsureCreated();
 
             if (context.WeatherForecasts.Any())
             {
