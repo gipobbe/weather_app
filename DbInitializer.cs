@@ -1,5 +1,9 @@
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using weather_app.Modules.Weather.Entities;
 
 namespace weather_app
 {
@@ -7,25 +11,23 @@ namespace weather_app
     {
         public static void Initialize(AppDbContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
-            if (context.WeatherForecasts.Any())
+            if (context.Weather.Any())
             {
                 return;
             }
 
-            var forecasts = new WeatherForecast[]
+            var weatherSeeds = new Weather[]
             {
-                new WeatherForecast {TemperatureC = 10, Summary = "Prov1", Date = DateTime.Now},
-                new WeatherForecast {TemperatureC = 10, Summary = "Prova2", Date = DateTime.Now},
-                new WeatherForecast {TemperatureC = 10, Summary = "Prova3", Date = DateTime.Now},
-                new WeatherForecast {TemperatureC = 10, Summary = "Prova4", Date = DateTime.Now},
-                new WeatherForecast {TemperatureC = 10, Summary = "Prova5", Date = DateTime.Now},
+                new Weather { Id = 1, Description = "Test1", Icon = "0000", Main = "Test1"},
+                new Weather { Id = 2, Description = "Test2", Icon = "0000", Main = "Test2"},
+                new Weather { Id = 3, Description = "Test3", Icon = "0000", Main = "Test3"},
             };
 
-            foreach (var fore in forecasts)
+            foreach (var seed in weatherSeeds)
             {
-                context.WeatherForecasts.Add(fore);
+                context.Weather.Add(seed);
             }
 
             context.SaveChanges();
