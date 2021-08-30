@@ -1,0 +1,10 @@
+{
+  "sender_name": "Italian Air Force National Meteorological Service",
+  "event": "Yellow Thunderstorm Warning",
+  "start": 1630321200,
+  "end": 1630342740,
+  "description": "NORTHERN AREAS\n (DISCLAIMER: \"Information provided on METEOALARM for Italy regard only the intensity and recurrence of the phenomena, further details can be found at www.meteoam.it. METEOALARM information do not provide the assessment of impact on the territory and they do not represent the Official Alerts messages that are issued by the National Civil Protection Service www.protezionecivile.it\")",
+  "tags": [
+    "Thunderstorm"
+  ]
+}
