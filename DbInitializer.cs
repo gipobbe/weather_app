@@ -1,9 +1,7 @@
-using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using weather_app.Modules.Weather.Entities;
+using weather_app.Modules.WeatherInfos.Entities;
+
 
 namespace weather_app
 {
@@ -18,11 +16,11 @@ namespace weather_app
                 return;
             }
 
-            var weatherSeeds = new Weather[]
+            var weatherSeeds = new WeatherInfo[]
             {
-                new Weather { Id = 1, Description = "Test1", Icon = "0000", Main = "Test1"},
-                new Weather { Id = 2, Description = "Test2", Icon = "0000", Main = "Test2"},
-                new Weather { Id = 3, Description = "Test3", Icon = "0000", Main = "Test3"},
+                new WeatherInfo { Id = 1, Description = "Test1", Icon = "0000", Main = "Test1"},
+                new WeatherInfo { Id = 2, Description = "Test2", Icon = "0000", Main = "Test2"},
+                new WeatherInfo { Id = 3, Description = "Test3", Icon = "0000", Main = "Test3"},
             };
 
             foreach (var seed in weatherSeeds)
