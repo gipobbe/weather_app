@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using weather_app.Modules.Weather.Services;
+using weather_app.Modules.Forecasts.Services;
 
 namespace weather_app.Controllers
 {
