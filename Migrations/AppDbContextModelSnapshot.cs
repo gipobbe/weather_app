@@ -242,6 +242,9 @@ namespace weather_app.Migrations
                     b.Property<DateTime>("EndAt")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Event")
+                        .HasColumnType("text");
+
                     b.Property<Guid?>("OneCallForecastId")
                         .HasColumnType("uuid");
 

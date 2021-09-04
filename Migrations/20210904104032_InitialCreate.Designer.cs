@@ -10,7 +10,7 @@ using weather_app;
 namespace weather_app.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210830195051_InitialCreate")]
+    [Migration("20210904104032_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,6 +243,9 @@ namespace weather_app.Migrations
 
                     b.Property<DateTime>("EndAt")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Event")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("OneCallForecastId")
                         .HasColumnType("uuid");

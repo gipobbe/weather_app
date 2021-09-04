@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using weather_app.Core.AppHttpClient;
+using weather_app.Modules.Weather.Services;
 
 namespace weather_app
 {
@@ -37,6 +39,10 @@ namespace weather_app
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<AppHttpClient>();
+            
+            services.AddScoped<WeatherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

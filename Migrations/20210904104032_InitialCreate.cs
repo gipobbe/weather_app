@@ -174,6 +174,7 @@ namespace weather_app.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     SenderName = table.Column<string>(type: "text", nullable: true),
+                    Event = table.Column<string>(type: "text", nullable: true),
                     StartAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EndAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),

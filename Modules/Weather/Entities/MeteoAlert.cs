@@ -9,6 +9,8 @@ namespace weather_app.Modules.Weather.Entities
         
         public string SenderName { get; set; }
         
+        public string Event { get; set; }
+        
         public DateTime StartAt { get; set; }
         
         public DateTime EndAt { get; set; }
@@ -16,6 +18,5 @@ namespace weather_app.Modules.Weather.Entities
         public string Description { get; set; }
         
         public string Tags { get; set; }
-        
     }
 }
