@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using weather_app.Core.AppHttpClient;
 using weather_app.Modules.Forecasts.Dtos;
+using weather_app.Modules.Forecasts.Entities;
 using weather_app.Modules.Forecasts.Mappings;
 using weather_app.Modules.Forecasts.Repositories;
 using weather_app.Modules.WeatherInfos.Entities;
@@ -37,6 +39,15 @@ namespace weather_app.Modules.Forecasts.Services
             await _oneCallForecastRepository.Save();
 
             var cicio = "Ciao";
+        }
+
+        public async Task<OneCallForecast> GetDBData()
+        {
+            //var oneCallForAll = _oneCallForecastRepository.GetById(new Guid("110f40ef-7ff5-44f8-92e6-4b920607db38"));
+            var current = await _oneCallForecastRepository.GetByIdWithRelations(new Guid("e6545b56-61c2-4590-a744-3ded7ac5b205"));
+
+            return current;
+
         }
     }
 }
