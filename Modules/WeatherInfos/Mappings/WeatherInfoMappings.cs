@@ -12,7 +12,7 @@ namespace weather_app.Modules.WeatherInfos.Mappings
         {
             var entity = new WeatherInfo()
             {
-                Id = readDto.Id,
+                ExternalId = readDto.ExternalId,
                 Main = readDto.Main,
                 Description = readDto.Description,
                 Icon = readDto.Icon

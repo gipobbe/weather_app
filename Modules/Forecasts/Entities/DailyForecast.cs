@@ -28,7 +28,7 @@ namespace weather_app.Modules.Forecasts.Entities
         public double WindDeg { get; set; }
         public double WindGust { get; set; }
         
-        public ICollection<WeatherInfo> Weathers { get; set; }
+        public ICollection<WeatherInfo> WeatherInfos { get; set; }
         
         public double Clouds { get; set; }
         public double Pop { get; set; }

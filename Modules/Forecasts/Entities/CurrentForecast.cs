@@ -40,6 +40,6 @@ namespace weather_app.Modules.Forecasts.Entities
       
       public double? Snow { get; set; } // snow volume on the last hour, mm
       
-      public ICollection<WeatherInfo> Weathers { get; set; }
+      public ICollection<WeatherInfo> WeatherInfos { get; set; }
     }
 }
