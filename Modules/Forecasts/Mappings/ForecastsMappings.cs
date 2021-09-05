@@ -6,6 +6,7 @@ using weather_app.Modules.Forecasts.Dtos;
 using weather_app.Modules.Forecasts.Entities;
 using weather_app.Modules.Temperatures.Mappings;
 using weather_app.Modules.Weather.Entities;
+using weather_app.Modules.WeatherInfos.Entities;
 using weather_app.Modules.WeatherInfos.Mappings;
 
 namespace weather_app.Modules.Forecasts.Mappings
@@ -30,9 +31,9 @@ namespace weather_app.Modules.Forecasts.Mappings
                 WindSpeed = readDto.WindSpeed,
                 WindDeg = readDto.WindDeg,
                 WindGust = readDto.WindGust,
+                WeatherInfos = WeatherInfoMappings.Map(readDto.Weathers),
                 Rain = readDto.Rain,
                 Snow = readDto.Snow,
-                Weathers = WeatherInfoMappings.Map(readDto.Weathers)
             };
             return entity;
         }
@@ -67,8 +68,8 @@ namespace weather_app.Modules.Forecasts.Mappings
                 WindSpeed = readDto.WindSpeed,
                 WindDeg = readDto.WindDeg,
                 WindGust = readDto.WindGust,
-                Weathers = WeatherInfoMappings.Map(readDto.Weathers),
                 Clouds = readDto.Clouds,
+                WeatherInfos = WeatherInfoMappings.Map(readDto.Weathers),
                 Pop = readDto.Pop,
                 Rain = readDto.Rain,
                 Uvi = readDto.Uvi
@@ -104,7 +105,7 @@ namespace weather_app.Modules.Forecasts.Mappings
                 WindSpeed = readDto.WindSpeed,
                 WindDeg = readDto.WindDeg,
                 WindGust = readDto.WindGust,
-                Weathers = WeatherInfoMappings.Map(readDto.Weathers),
+                WeatherInfos = WeatherInfoMappings.Map(readDto.Weathers),
                 Pop = readDto.Pop
             };
 

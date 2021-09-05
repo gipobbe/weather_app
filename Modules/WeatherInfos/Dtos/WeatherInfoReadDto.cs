@@ -5,7 +5,7 @@ namespace weather_app.Modules.WeatherInfos.Dtos
     public class WeatherInfoReadDto
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int ExternalId { get; set; }
         
         [JsonPropertyName("main")]
         public string Main { get; set; }

@@ -11,21 +11,21 @@ namespace weather_app
         {
             context.Database.Migrate();
 
-            if (context.Weather.Any())
+            if (context.WeatherInfos.Any())
             {
                 return;
             }
 
             var weatherSeeds = new WeatherInfo[]
             {
-                new WeatherInfo { Id = 1, Description = "Test1", Icon = "0000", Main = "Test1"},
-                new WeatherInfo { Id = 2, Description = "Test2", Icon = "0000", Main = "Test2"},
-                new WeatherInfo { Id = 3, Description = "Test3", Icon = "0000", Main = "Test3"},
+                new WeatherInfo { ExternalId = 1, Description = "Test1", Icon = "0000", Main = "Test1"},
+                new WeatherInfo { ExternalId = 2, Description = "Test2", Icon = "0000", Main = "Test2"},
+                new WeatherInfo { ExternalId = 3, Description = "Test3", Icon = "0000", Main = "Test3"},
             };
 
             foreach (var seed in weatherSeeds)
             {
-                context.Weather.Add(seed);
+                context.WeatherInfos.Add(seed);
             }
 
             context.SaveChanges();

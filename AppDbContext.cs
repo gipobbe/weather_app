@@ -25,23 +25,10 @@ namespace weather_app
         public DbSet<MinutelyForecast> MinutelyForecasts { get; set; }
         public DbSet<OneCallForecast> OneCallForecasts { get; set; }
         public DbSet<Temperature> Temperatures { get; set; }
-        
-        public DbSet<WeatherInfo> Weather { get; set; }
+        public DbSet<WeatherInfo> WeatherInfos { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<CurrentForecastWeather>().HasKey(sc => new { sc.CurrentForecastID, sc.WeatherId });
-            //
-            // modelBuilder.Entity<CurrentForecastWeather>()
-            //     .HasOne<Weather>(p => p.Weather)
-            //     .WithMany(p => p.CurrentForecastWeathers)
-            //     .HasForeignKey(sc => sc.WeatherId);
-            //
-            // modelBuilder.Entity<CurrentForecastWeather>()
-            //     .HasOne<CurrentForecast>(sc => sc.CurrentForecast)
-            //     .WithMany(s => s.CurrentForecastWeathers)
-            //     .HasForeignKey(sc => sc.CurrentForecastID);
-            
         }
     }
 }

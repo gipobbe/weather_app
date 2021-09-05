@@ -7,7 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using weather_app.Core.AppHttpClient;
+using weather_app.Modules.Forecasts;
+using weather_app.Modules.Forecasts.Repositories;
 using weather_app.Modules.Forecasts.Services;
+using weather_app.Modules.WeatherInfos.Repositories;
 
 namespace weather_app
 {
@@ -40,6 +43,9 @@ namespace weather_app
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<AppHttpClient>();
+            
+            services.AddScoped<WeatherInfoRepository>();
+            services.AddScoped<OneCallForecastRepository>();
             
             services.AddScoped<WeatherService>();
         }
