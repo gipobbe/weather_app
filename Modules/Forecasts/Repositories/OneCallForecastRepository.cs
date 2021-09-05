@@ -30,6 +30,24 @@ namespace weather_app.Modules.Forecasts.Repositories
             return _appDbContext.OneCallForecasts.Find(id);
         }
 
+        public async Task<OneCallForecast> GetByIdWithRelations(Guid id)
+        {
+            var entities = await _appDbContext.OneCallForecasts
+                .Include(i => i.DailyForecasts)
+                .ThenInclude(i => i.WeatherInfos)
+                .Include(i => i.HourlyForecasts)
+                .ThenInclude(i => i.WeatherInfos)
+                .Include(i => i.MinutelyForecasts)
+                .Include(i => i.CurrentForecast)
+                .ThenInclude(i => i.WeatherInfos)
+                .Include(i => i.MeteoAlert)
+                .AsNoTracking()
+                .AsSplitQuery()
+                .ToListAsync();
+
+            return entities.First(i => i.Id == id);
+        }
+
         public async Task Create(OneCallForecast oneCallForecast)
         {
             _appDbContext.OneCallForecasts.Add(oneCallForecast);

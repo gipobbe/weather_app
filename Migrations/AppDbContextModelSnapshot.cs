@@ -19,51 +19,6 @@ namespace weather_app.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("CurrentForecastWeatherInfo", b =>
-                {
-                    b.Property<Guid>("CurrentForecastsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("WeatherInfosId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("CurrentForecastsId", "WeatherInfosId");
-
-                    b.HasIndex("WeatherInfosId");
-
-                    b.ToTable("CurrentForecastWeatherInfo");
-                });
-
-            modelBuilder.Entity("DailyForecastWeatherInfo", b =>
-                {
-                    b.Property<Guid>("DailyForecastsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("WeatherInfosId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("DailyForecastsId", "WeatherInfosId");
-
-                    b.HasIndex("WeatherInfosId");
-
-                    b.ToTable("DailyForecastWeatherInfo");
-                });
-
-            modelBuilder.Entity("HourlyForecastWeatherInfo", b =>
-                {
-                    b.Property<Guid>("HourlyForecastsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("WeatherInfosId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("HourlyForecastsId", "WeatherInfosId");
-
-                    b.HasIndex("WeatherInfosId");
-
-                    b.ToTable("HourlyForecastWeatherInfo");
-                });
-
             modelBuilder.Entity("weather_app.Modules.Alerts.Entities.Alert", b =>
                 {
                     b.Property<Guid>("Id")
@@ -399,12 +354,21 @@ namespace weather_app.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("CurrentForecastId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DailyForecastId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("ExternalId")
                         .HasColumnType("integer");
+
+                    b.Property<Guid?>("HourlyForecastId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -416,52 +380,13 @@ namespace weather_app.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CurrentForecastId");
+
+                    b.HasIndex("DailyForecastId");
+
+                    b.HasIndex("HourlyForecastId");
+
                     b.ToTable("WeatherInfos");
-                });
-
-            modelBuilder.Entity("CurrentForecastWeatherInfo", b =>
-                {
-                    b.HasOne("weather_app.Modules.Forecasts.Entities.CurrentForecast", null)
-                        .WithMany()
-                        .HasForeignKey("CurrentForecastsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("weather_app.Modules.WeatherInfos.Entities.WeatherInfo", null)
-                        .WithMany()
-                        .HasForeignKey("WeatherInfosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DailyForecastWeatherInfo", b =>
-                {
-                    b.HasOne("weather_app.Modules.Forecasts.Entities.DailyForecast", null)
-                        .WithMany()
-                        .HasForeignKey("DailyForecastsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("weather_app.Modules.WeatherInfos.Entities.WeatherInfo", null)
-                        .WithMany()
-                        .HasForeignKey("WeatherInfosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HourlyForecastWeatherInfo", b =>
-                {
-                    b.HasOne("weather_app.Modules.Weather.Entities.HourlyForecast", null)
-                        .WithMany()
-                        .HasForeignKey("HourlyForecastsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("weather_app.Modules.WeatherInfos.Entities.WeatherInfo", null)
-                        .WithMany()
-                        .HasForeignKey("WeatherInfosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("weather_app.Modules.Alerts.Entities.Alert", b =>
@@ -513,6 +438,31 @@ namespace weather_app.Migrations
                         .HasForeignKey("OneCallForecastId");
                 });
 
+            modelBuilder.Entity("weather_app.Modules.WeatherInfos.Entities.WeatherInfo", b =>
+                {
+                    b.HasOne("weather_app.Modules.Forecasts.Entities.CurrentForecast", null)
+                        .WithMany("WeatherInfos")
+                        .HasForeignKey("CurrentForecastId");
+
+                    b.HasOne("weather_app.Modules.Forecasts.Entities.DailyForecast", null)
+                        .WithMany("WeatherInfos")
+                        .HasForeignKey("DailyForecastId");
+
+                    b.HasOne("weather_app.Modules.Weather.Entities.HourlyForecast", null)
+                        .WithMany("WeatherInfos")
+                        .HasForeignKey("HourlyForecastId");
+                });
+
+            modelBuilder.Entity("weather_app.Modules.Forecasts.Entities.CurrentForecast", b =>
+                {
+                    b.Navigation("WeatherInfos");
+                });
+
+            modelBuilder.Entity("weather_app.Modules.Forecasts.Entities.DailyForecast", b =>
+                {
+                    b.Navigation("WeatherInfos");
+                });
+
             modelBuilder.Entity("weather_app.Modules.Forecasts.Entities.OneCallForecast", b =>
                 {
                     b.Navigation("DailyForecasts");
@@ -522,6 +472,11 @@ namespace weather_app.Migrations
                     b.Navigation("MeteoAlert");
 
                     b.Navigation("MinutelyForecasts");
+                });
+
+            modelBuilder.Entity("weather_app.Modules.Weather.Entities.HourlyForecast", b =>
+                {
+                    b.Navigation("WeatherInfos");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,10 +16,5 @@ namespace weather_app.Modules.WeatherInfos.Entities
         
         public string Icon { get; set; }
         
-        public ICollection<CurrentForecast> CurrentForecasts { get; set; }
-        
-        public ICollection<DailyForecast> DailyForecasts { get; set; }
-        
-        public ICollection<HourlyForecast> HourlyForecasts { get; set; }
     }
 }

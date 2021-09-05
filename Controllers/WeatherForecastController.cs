@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using weather_app.Modules.Forecasts.Entities;
 using weather_app.Modules.Forecasts.Services;
 
 namespace weather_app.Controllers
@@ -40,6 +41,18 @@ namespace weather_app.Controllers
                     Summary = Summaries[rng.Next(Summaries.Length)]
                 })
                 .ToArray();
+        }
+        
+        
+        [HttpGet]
+        [Route("byId")]
+        public async Task<OneCallForecast> GetById()
+        {
+            var rng = new Random();
+
+            var one = await _weatherService.GetDBData();
+
+            return one;
         }
     }
 }
