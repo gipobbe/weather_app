@@ -67,21 +67,6 @@ namespace weather_app.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WeatherInfos",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ExternalId = table.Column<int>(type: "integer", nullable: false),
-                    Main = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    Icon = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WeatherInfos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OneCallForecasts",
                 columns: table => new
                 {
@@ -101,30 +86,6 @@ namespace weather_app.Migrations
                         principalTable: "CurrentForecast",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CurrentForecastWeatherInfo",
-                columns: table => new
-                {
-                    CurrentForecastsId = table.Column<Guid>(type: "uuid", nullable: false),
-                    WeatherInfosId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CurrentForecastWeatherInfo", x => new { x.CurrentForecastsId, x.WeatherInfosId });
-                    table.ForeignKey(
-                        name: "FK_CurrentForecastWeatherInfo_CurrentForecast_CurrentForecasts~",
-                        column: x => x.CurrentForecastsId,
-                        principalTable: "CurrentForecast",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CurrentForecastWeatherInfo_WeatherInfos_WeatherInfosId",
-                        column: x => x.WeatherInfosId,
-                        principalTable: "WeatherInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,57 +212,40 @@ namespace weather_app.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DailyForecastWeatherInfo",
+                name: "WeatherInfos",
                 columns: table => new
                 {
-                    DailyForecastsId = table.Column<Guid>(type: "uuid", nullable: false),
-                    WeatherInfosId = table.Column<Guid>(type: "uuid", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExternalId = table.Column<int>(type: "integer", nullable: false),
+                    Main = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Icon = table.Column<string>(type: "text", nullable: false),
+                    CurrentForecastId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DailyForecastId = table.Column<Guid>(type: "uuid", nullable: true),
+                    HourlyForecastId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DailyForecastWeatherInfo", x => new { x.DailyForecastsId, x.WeatherInfosId });
+                    table.PrimaryKey("PK_WeatherInfos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DailyForecastWeatherInfo_DailyForecasts_DailyForecastsId",
-                        column: x => x.DailyForecastsId,
+                        name: "FK_WeatherInfos_CurrentForecast_CurrentForecastId",
+                        column: x => x.CurrentForecastId,
+                        principalTable: "CurrentForecast",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WeatherInfos_DailyForecasts_DailyForecastId",
+                        column: x => x.DailyForecastId,
                         principalTable: "DailyForecasts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DailyForecastWeatherInfo_WeatherInfos_WeatherInfosId",
-                        column: x => x.WeatherInfosId,
-                        principalTable: "WeatherInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HourlyForecastWeatherInfo",
-                columns: table => new
-                {
-                    HourlyForecastsId = table.Column<Guid>(type: "uuid", nullable: false),
-                    WeatherInfosId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HourlyForecastWeatherInfo", x => new { x.HourlyForecastsId, x.WeatherInfosId });
-                    table.ForeignKey(
-                        name: "FK_HourlyForecastWeatherInfo_HourlyForecasts_HourlyForecastsId",
-                        column: x => x.HourlyForecastsId,
+                        name: "FK_WeatherInfos_HourlyForecasts_HourlyForecastId",
+                        column: x => x.HourlyForecastId,
                         principalTable: "HourlyForecasts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HourlyForecastWeatherInfo_WeatherInfos_WeatherInfosId",
-                        column: x => x.WeatherInfosId,
-                        principalTable: "WeatherInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CurrentForecastWeatherInfo_WeatherInfosId",
-                table: "CurrentForecastWeatherInfo",
-                column: "WeatherInfosId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DailyForecasts_FeelsLikeId",
@@ -319,19 +263,9 @@ namespace weather_app.Migrations
                 column: "TemperatureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DailyForecastWeatherInfo_WeatherInfosId",
-                table: "DailyForecastWeatherInfo",
-                column: "WeatherInfosId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_HourlyForecasts_OneCallForecastId",
                 table: "HourlyForecasts",
                 column: "OneCallForecastId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HourlyForecastWeatherInfo_WeatherInfosId",
-                table: "HourlyForecastWeatherInfo",
-                column: "WeatherInfosId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeteoAlerts_OneCallForecastId",
@@ -347,19 +281,25 @@ namespace weather_app.Migrations
                 name: "IX_OneCallForecasts_CurrentForecastId",
                 table: "OneCallForecasts",
                 column: "CurrentForecastId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WeatherInfos_CurrentForecastId",
+                table: "WeatherInfos",
+                column: "CurrentForecastId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WeatherInfos_DailyForecastId",
+                table: "WeatherInfos",
+                column: "DailyForecastId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WeatherInfos_HourlyForecastId",
+                table: "WeatherInfos",
+                column: "HourlyForecastId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "CurrentForecastWeatherInfo");
-
-            migrationBuilder.DropTable(
-                name: "DailyForecastWeatherInfo");
-
-            migrationBuilder.DropTable(
-                name: "HourlyForecastWeatherInfo");
-
             migrationBuilder.DropTable(
                 name: "MeteoAlerts");
 
@@ -367,13 +307,13 @@ namespace weather_app.Migrations
                 name: "MinutelyForecasts");
 
             migrationBuilder.DropTable(
+                name: "WeatherInfos");
+
+            migrationBuilder.DropTable(
                 name: "DailyForecasts");
 
             migrationBuilder.DropTable(
                 name: "HourlyForecasts");
-
-            migrationBuilder.DropTable(
-                name: "WeatherInfos");
 
             migrationBuilder.DropTable(
                 name: "FeelsLikes");
